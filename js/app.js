@@ -7,6 +7,7 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.reset();
+    this.
 };
 
 // Update the enemy's position, required method for game
