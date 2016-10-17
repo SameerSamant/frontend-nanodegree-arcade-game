@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 606;
+    canvas.height = 707;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -91,10 +91,13 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        if (!player.stop) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
         player.update();
+    }
+        
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,6 +155,8 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+         ctx.drawImage(Resources.get("images/Heart.png"), 4 * 101, 450);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -165,10 +170,17 @@ var Engine = (function(global) {
     function checkCollisions() {
       allEnemies.forEach(function (enemy) {
         var x = Math.floor(enemy.x)
-        if (enemy.y === player.y &&   x - 50 < player.x && x + 50 > player.x)
-        {
-          player.score > 0 ? player.score -=1 : 0;
-          player.reset();
+        if (enemy.y === player.y &&   x - 50 < player.x && x + 50 > player.x) {
+            // After collision
+            // reduce score
+            player.score -=1;
+          if (player.score <= 0 ) { // if score is 0
+                player.stop = true;
+
+            }          
+            else { // else reset player
+                player.reset();
+            }
         }
     });
 

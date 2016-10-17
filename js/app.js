@@ -6,16 +6,18 @@ var Enemy = function () {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.reset();
+    this.reset();           
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function (dt) {
-    if (this.x > 700) {
-        this.reset();
-    }
-    this.x += this.s * dt;
+    
+        if (this.x > 700) {
+            this.reset();
+        }
+        this.x += this.s * dt;
+    
 
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -25,25 +27,14 @@ Enemy.prototype.update = function (dt) {
 Enemy.prototype.reset = function () {
     this.x = -50;
     this.s = (Math.floor(Math.random() * 3) + 1) * 100;
-    var row = Math.floor(Math.random() * 3) + 1;
-    switch (row) {
-    case 2:
-        this.y = 154;
-        break;
-    case 3:
-        this.y = 237;
-        break;
-    default:
-        this.y = 71;
-    }
+    this.row = Math.floor(Math.random() * 3) + 1;
+    this.y = this.row * 83 - 25;    
+
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.rect(20,20,150,100);
-    ctx.stroke();
-
 };
 
 // Now write your own player class
@@ -53,14 +44,29 @@ Enemy.prototype.render = function () {
 var Player = function () {
     this.sprite =  playerImages[0];
     this.reset();
-    this.gems = 0;
-    this.keys = 0;
-    this.score = 0;
+    this.gemBlue = 0; // total blue gems collected
+    this.gemGreen = 0; // total green gems collected
+    this.gemOrange = 0; // total orange gems collected
+    this.keys = 0;    // keys collected 
+    this.score = 5;   // player life +1 on reaching water
+    this.stop = false; // halt the game
+    this.row = 5;  // player in row
+    this.col = 3; // player in col
+};
+
+Player.prototype.setRow = function (row) {
+    this.row = row;
+    this.y = row * 83 - 25;
+};
+
+Player.prototype.setCol = function (col) {
+    this.col = col;
+    this.x = col * 101;
 };
 
 Player.prototype.reset = function () {
-    this.x = 200;
-    this.y = 320;
+    this.setRow(4);
+    this.setCol(3);
 };
 
 Player.prototype.render = function () {
@@ -77,10 +83,10 @@ Player.prototype.update = function () {
 Player.prototype.handleInput = function (dir) {
     switch (dir) {
     case 'up':
-        this.y > 50 ? this.y -= 83 : this.y;
+        this.row > 0 ? this.setRow (this.row - 1) : this.row;
         break;
     case 'down':
-        this.y < 350 ? this.y += 83 : this.y;
+        this.row < 5 ? this.setRow (this.row + 1) : this.row;
         break;
     case 'left':
         this.x > 80 ? this.x -= 101 : this.x;
@@ -88,8 +94,10 @@ Player.prototype.handleInput = function (dir) {
     case 'right':
         this.x < 400 ? this.x += 101 : this.x;
         break;
-    case 'p':
+    case 'p': // change player avatar
+        if(this.y >300 ) { // only change avatar when player is on the grass 
         this.setNextPlayerIamge();
+        }
         break;
     }
 };
