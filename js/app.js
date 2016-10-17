@@ -7,7 +7,6 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.reset();
-    this.
 };
 
 // Update the enemy's position, required method for game
@@ -29,19 +28,22 @@ Enemy.prototype.reset = function () {
     var row = Math.floor(Math.random() * 3) + 1;
     switch (row) {
     case 2:
-        this.y = 145;
+        this.y = 154;
         break;
     case 3:
-        this.y = 225;
+        this.y = 237;
         break;
     default:
-        this.y = 60;
+        this.y = 71;
     }
 };
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.rect(20,20,150,100);
+    ctx.stroke();
+
 };
 
 // Now write your own player class
@@ -49,12 +51,15 @@ Enemy.prototype.render = function () {
 // a handleInput() method.
 
 var Player = function () {
-    this.sprite = 'images/char-boy.png';
+    this.sprite =  playerImages[0];
     this.reset();
+    this.gems = 0;
+    this.keys = 0;
+    this.score = 0;
 };
 
 Player.prototype.reset = function () {
-    this.x = 300;
+    this.x = 200;
     this.y = 320;
 };
 
@@ -63,11 +68,13 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.update = function () {
-
+   if(this.y === -12) {
+     this.score +=1;
+     this.reset();
+   }
 };
 
 Player.prototype.handleInput = function (dir) {
-  console.log(this.x + " " + this.y);
     switch (dir) {
     case 'up':
         this.y > 50 ? this.y -= 83 : this.y;
@@ -81,8 +88,30 @@ Player.prototype.handleInput = function (dir) {
     case 'right':
         this.x < 400 ? this.x += 101 : this.x;
         break;
+    case 'p':
+        this.setNextPlayerIamge();
+        break;
     }
 };
+
+Player.prototype.setNextPlayerIamge = function () {
+   var index = playerImages.indexOf(this.sprite);
+   index += 1
+   if (index == playerImages.length) {
+     index = 0;
+   }
+   this.sprite = playerImages[index];
+}
+
+var playerImages = [
+    'images/char-boy.png',
+    'images/char-cat-girl.png',
+    'images/char-horn-girl.png',
+    'images/char-pink-girl.png'
+  ]
+
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -98,7 +127,8 @@ document.addEventListener('keyup', function (e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        80: 'p'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);

@@ -164,9 +164,10 @@ var Engine = (function(global) {
 
     function checkCollisions() {
       allEnemies.forEach(function (enemy) {
-        if (enemy.x === player.x)
+        var x = Math.floor(enemy.x)
+        if (enemy.y === player.y &&   x - 50 < player.x && x + 50 > player.x)
         {
-          console.log("Reset");
+          player.score > 0 ? player.score -=1 : 0;
           player.reset();
         }
     });
@@ -182,7 +183,16 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png',
+        'images/Heart.png',
+        'images/Key.png',
     ]);
     Resources.onReady(init);
 
