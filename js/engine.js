@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -160,6 +160,17 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+    }
+
+    function checkCollisions() {
+      allEnemies.forEach(function (enemy) {
+        if (enemy.x === player.x)
+        {
+          console.log("Reset");
+          player.reset();
+        }
+    });
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to
