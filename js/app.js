@@ -9,6 +9,7 @@ var Enemy = function() {
     this.reset();
 };
 
+Enemy.prototype.level = 1;
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -16,7 +17,7 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 700) {
         this.reset();
     }
-    this.x += this.s * dt;
+    this.x += this.speed * this.level * dt;
 
 
     // You should multiply any movement by the dt parameter
@@ -26,7 +27,7 @@ Enemy.prototype.update = function(dt) {
 
 Enemy.prototype.reset = function() {
     this.x = -50;
-    this.s = (Math.floor(Math.random() * 3) + 1) * 100;
+    this.speed = (Math.floor(Math.random() * 3) + 1) * 100;
     this.setRow(Math.floor(Math.random() * 3) + 2);
 };
 
@@ -91,6 +92,8 @@ Player.prototype.handleInput = function(dir) {
                 }
                 if (this.row === 1) {
                     this.score++;
+                    Enemy.prototype.level++;
+
                 }
                 break;
             case 'down':
