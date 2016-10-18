@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 707;
+    canvas.height = 586;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -92,12 +92,12 @@ var Engine = (function(global) {
      */
     function updateEntities(dt) {
         if (!player.stop) {
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
-        });
-        player.update();
-    }
-        
+            allEnemies.forEach(function(enemy) {
+                enemy.update(dt);
+            });
+        }
+        player.update(dt);
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -111,12 +111,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/water-block.png', // Top row is water
+                'images/stone-block.png', // Row 1 of 3 of stone
+                'images/stone-block.png', // Row 2 of 3 of stone
+                'images/stone-block.png', // Row 3 of 3 of stone
+                'images/grass-block.png', // Row 1 of 2 of grass
+                'images/grass-block.png' // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -156,7 +156,9 @@ var Engine = (function(global) {
 
         player.render();
 
-         ctx.drawImage(Resources.get("images/Heart.png"), 4 * 101, 450);
+        ctx.drawImage(Resources.get("images/Heart_small.png"), 4 * 101 + 30, 540);
+        ctx.font = "20px Verdana";
+        ctx.fillText("x " + player.score, 464, 568);
     }
 
     /* This function does nothing but it could have been a good place to
@@ -168,20 +170,22 @@ var Engine = (function(global) {
     }
 
     function checkCollisions() {
-      allEnemies.forEach(function (enemy) {
-        var x = Math.floor(enemy.x)
-        if (enemy.row === player.row &&   x - 50 < player.x && x + 50 > player.x) {
-            // After collision
-            // reduce score
-            player.score -=1;
-          if (player.score <= 0 ) { // if score is 0
-                player.stop = true;
-            }          
-            else { // else reset player
-                player.reset();
+        allEnemies.forEach(function(enemy) {
+            var x = Math.floor(enemy.x);
+            if (enemy.row === player.row && x - 50 < player.x && x + 50 > player.x) {
+                // After collision
+                // reduce score     
+
+                if (player.score <= 1) { // if score is 0
+                    player.score = 0;
+                    player.die;
+                    player.stop = true;
+                } else { // else reset player
+                    player.score--;
+                    player.reset();
+                }
             }
-        }
-    });
+        });
 
     }
 
@@ -202,7 +206,7 @@ var Engine = (function(global) {
         'images/Gem Blue.png',
         'images/Gem Green.png',
         'images/Gem Orange.png',
-        'images/Heart.png',
+        'images/Heart_small.png',
         'images/Key.png',
     ]);
     Resources.onReady(init);
