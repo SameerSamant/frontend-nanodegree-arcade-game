@@ -170,13 +170,12 @@ var Engine = (function(global) {
     function checkCollisions() {
       allEnemies.forEach(function (enemy) {
         var x = Math.floor(enemy.x)
-        if (enemy.y === player.y &&   x - 50 < player.x && x + 50 > player.x) {
+        if (enemy.row === player.row &&   x - 50 < player.x && x + 50 > player.x) {
             // After collision
             // reduce score
             player.score -=1;
           if (player.score <= 0 ) { // if score is 0
                 player.stop = true;
-
             }          
             else { // else reset player
                 player.reset();

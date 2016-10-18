@@ -49,23 +49,22 @@ var Player = function () {
     this.gemOrange = 0; // total orange gems collected
     this.keys = 0;    // keys collected 
     this.score = 5;   // player life +1 on reaching water
-    this.stop = false; // halt the game
-    this.row = 5;  // player in row
-    this.col = 3; // player in col
+    this.stop = false; // halt the game    
 };
 
 Player.prototype.setRow = function (row) {
+    console.log(row);
     this.row = row;
-    this.y = row * 83 - 25;
+    this.y =  (row - 1) * 83 - 13;
 };
 
 Player.prototype.setCol = function (col) {
     this.col = col;
-    this.x = col * 101;
+    this.x = (this.col -1) * 101;
 };
 
 Player.prototype.reset = function () {
-    this.setRow(4);
+    this.setRow(6);
     this.setCol(3);
 };
 
@@ -74,19 +73,19 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.update = function () {
-   if(this.y === -12) {
-     this.score +=1;
-     this.reset();
+   if(this.row === 1) {
+     this.score +=1;     
    }
 };
 
 Player.prototype.handleInput = function (dir) {
     switch (dir) {
     case 'up':
-        this.row > 0 ? this.setRow (this.row - 1) : this.row;
+        this.row > 1 ? this.setRow (this.row - 1) : this.row;
         break;
-    case 'down':
-        this.row < 5 ? this.setRow (this.row + 1) : this.row;
+    case 'down':    
+        this.row === 1 ? this.reset() : this.row; // reset when reached to water and pressed down
+        this.row < 6 ? this.setRow (this.row + 1) : this.row;        
         break;
     case 'left':
         this.x > 80 ? this.x -= 101 : this.x;
@@ -95,7 +94,7 @@ Player.prototype.handleInput = function (dir) {
         this.x < 400 ? this.x += 101 : this.x;
         break;
     case 'p': // change player avatar
-        if(this.y >300 ) { // only change avatar when player is on the grass 
+        if(this.row === 5 || this.row == 6) { // only change avatar when player is on the grass 
         this.setNextPlayerIamge();
         }
         break;
