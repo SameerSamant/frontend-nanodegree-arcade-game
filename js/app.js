@@ -88,13 +88,13 @@ Player.prototype.handleInput = function(dir) {
         switch (dir) {
             case 'up':
                 if (this.row > 1) {
-                    this.setRow(this.row - 1);
+                    this.setRow(this.row - 1); // Increase the score and game level when reach to water
+                    if (this.row === 1) {
+                        this.score++;
+                        Enemy.prototype.level++;
+                    }
                 }
-                if (this.row === 1) {
-                    this.score++;
-                    Enemy.prototype.level++;
 
-                }
                 break;
             case 'down':
                 if (this.row === 1) { // reset when reached to water and pressed down
