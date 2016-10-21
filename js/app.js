@@ -91,7 +91,7 @@ Player.prototype.update = function(dt) {
 
 
 Player.prototype.handleInput = function(dir) {
-    if (player.stop === false) {
+    if (this.stop === false) {
         switch (dir) {
             case 'up':
                 if (this.row > 1) {
