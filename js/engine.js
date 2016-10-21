@@ -178,7 +178,6 @@ var Engine = (function(global) {
 
                 if (player.score <= 1) { // if score is 0
                     player.score = 0;
-                    player.die;
                     player.stop = true;
                 } else { // else reset player
                     player.score--;
@@ -203,11 +202,7 @@ var Engine = (function(global) {
         'images/char-horn-girl.png',
         'images/char-pink-girl.png',
         'images/char-princess-girl.png',
-        'images/Gem Blue.png',
-        'images/Gem Green.png',
-        'images/Gem Orange.png',
-        'images/Heart_small.png',
-        'images/Key.png',
+        'images/Heart_small.png'
     ]);
     Resources.onReady(init);
 

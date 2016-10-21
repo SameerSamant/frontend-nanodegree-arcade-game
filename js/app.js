@@ -9,7 +9,10 @@ var Enemy = function() {
     this.reset();
 };
 
+// a prototype level shared variable to increase speed of all enemies as level increases.
 Enemy.prototype.level = 1;
+
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
@@ -25,12 +28,15 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 };
 
+// use the same instances of enemy reset them to starting point with random row and random speed 
+
 Enemy.prototype.reset = function() {
     this.x = -50;
     this.speed = (Math.floor(Math.random() * 3) + 1) * 100;
     this.setRow(Math.floor(Math.random() * 3) + 2);
 };
 
+// Set row for Enemy 
 Enemy.prototype.setRow = function(row) {
     this.row = row;
     this.y = (row - 1) * 83 - 25;
@@ -46,26 +52,26 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 var Player = function() {
+    //player image can be changed by pressing "p"
     this.sprite = playerImages[0];
-    this.reset();
-    this.gemBlue = 0; // total blue gems collected
-    this.gemGreen = 0; // total green gems collected
-    this.gemOrange = 0; // total orange gems collected
-    this.keys = 0; // keys collected 
+    this.reset(); // reset player to starting position    
     this.score = 5; // player life +1 on reaching water
     this.stop = false; // halt the game    
 };
 
+//set x position based on row
 Player.prototype.setRow = function(row) {
     this.row = row;
     this.y = (row - 1) * 83 - 13;
 };
 
+//set y position based on col
 Player.prototype.setCol = function(col) {
     this.col = col;
     this.x = (this.col - 1) * 101;
 };
 
+// reset player to start position
 Player.prototype.reset = function() {
     this.setRow(6);
     this.setCol(3);
@@ -76,9 +82,10 @@ Player.prototype.render = function() {
 
 };
 
+
 Player.prototype.update = function(dt) {
-    if (this.stop === true) { // create die animation        
-        this.y += this.y * 3 * dt;
+    if (this.stop === true) { // create die animation when score is 0
+        this.y += this.y * 3 * dt; //accelerate 
     }
 };
 
@@ -88,7 +95,7 @@ Player.prototype.handleInput = function(dir) {
         switch (dir) {
             case 'up':
                 if (this.row > 1) {
-                    this.setRow(this.row - 1); // Increase the score and game level when reach to water
+                    this.setRow(this.row - 1); // Increase the score and game level when player reaches water
                     if (this.row === 1) {
                         this.score++;
                         Enemy.prototype.level++;
@@ -123,6 +130,7 @@ Player.prototype.handleInput = function(dir) {
     }
 };
 
+//change player avatar
 Player.prototype.setNextPlayerIamge = function() {
     var index = playerImages.indexOf(this.sprite);
     index += 1;
@@ -136,7 +144,8 @@ var playerImages = [
     'images/char-boy.png',
     'images/char-cat-girl.png',
     'images/char-horn-girl.png',
-    'images/char-pink-girl.png'
+    'images/char-pink-girl.png',
+    'images/char-princess-girl.png'
 ];
 
 

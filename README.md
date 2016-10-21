@@ -1,6 +1,23 @@
-frontend-nanodegree-arcade-game
+Arcade Game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+The bugs have invaded the earth and its been days since you have eaten anything, you desperately need some water to survive.
+The water is across the road and you need to reach there, without being eaten by a bug.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+# Instructions #
+
+## How to run ##
+The game will be in start mode when you open the website
+
+## How to Play ##
+You have *five* lives to reach the water. If you get eaten by a bug as long as the score is not *zero*  the game resets. After reaching the water each time you score will be increase, also it will increase the game level.
+
+Try to score as high as possible and send it to [me](high@score.com) for an exciting reward !!! 
+
+### Keys ###
+- **up**: go up
+- **down**: go down
+- **right**: go right
+- **left**: go left
+- **p**: change player avatar
+- **F5**: refresh / restart the game 
